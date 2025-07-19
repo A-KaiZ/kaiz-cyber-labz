@@ -20,3 +20,14 @@ Port: `22`
 ```bash
 hydra -l admin -P credentials.txt ssh://192.168.56.102
 ```
+
+
+##📜 Notes
+- It found the password "toor" on line 3.
+- Target VM used: Metasploitable2
+- Brute-force took ~12 seconds
+
+##🧯 Defense Ideas
+- Disable SSH password login
+- Use fail2ban
+- Enforce key-only authentication
