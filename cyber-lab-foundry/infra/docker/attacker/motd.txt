@@ -1,0 +1,11 @@
+============================================
+ Cyber Lab Foundry attacker workstation
+--------------------------------------------
+ - Scenario scripts: /opt/redteam
+ - Tools: nmap, sqlmap, hydra, feroxbuster, curl, jq
+ - Evidence output: /opt/telemetry
+
+Use `make attack NAME=<scenario>` from the host or run
+`/opt/redteam/run_scenario.sh <scenario>` manually.
+Stay within the lab network and act ethically.
+============================================

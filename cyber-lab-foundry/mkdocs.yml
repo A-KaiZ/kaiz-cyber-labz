@@ -1,0 +1,17 @@
+site_name: Cyber Lab Foundry
+nav:
+  - Home: docs/index.md
+  - Quickstart: docs/quickstart.md
+  - Scenarios: docs/scenarios.md
+  - Detections: docs/detections.md
+  - Architecture: docs/architecture.md
+  - Troubleshooting: docs/troubleshooting.md
+theme:
+  name: material
+  language: en
+markdown_extensions:
+  - admonition
+  - codehilite
+  - tables
+  - toc:
+      permalink: true

@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.env.local
+.mypy_cache/
+.pytest_cache/
+.telemetry/
+telemetry/capture/pcaps/
+telemetry/parsers/output/
+.docs_build/
+site/
+*.log

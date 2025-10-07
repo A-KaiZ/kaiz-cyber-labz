@@ -1,0 +1,23 @@
+title: Suspicious SQLi Indicators in Web Logs
+id: 8b0d9f02-24af-4dba-a8fe-web-sqli
+status: experimental
+description: Flags common SQL injection probes targeting the vulnerable Flask app.
+author: Cyber Lab Foundry
+logsource:
+  product: nginx
+  service: http
+level: medium
+detection:
+  selection:
+    request|contains:
+      - "' OR '1'='1"
+      - "UNION SELECT"
+      - "../"
+  condition: selection
+fields:
+  - client_ip
+  - request
+references:
+  - https://attack.mitre.org/techniques/T1190/
+falsepositives:
+  - Penetration testing traffic
