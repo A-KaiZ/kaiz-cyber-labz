@@ -1,0 +1,13 @@
+# Hardened SSH configuration baseline
+Port 22
+Protocol 2
+PermitRootLogin no
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+ChallengeResponseAuthentication no
+MaxAuthTries 3
+LoginGraceTime 30
+AllowUsers victim
+ClientAliveInterval 300
+ClientAliveCountMax 1
+AuthenticationMethods publickey

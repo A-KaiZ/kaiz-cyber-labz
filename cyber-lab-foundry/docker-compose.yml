@@ -1,0 +1,92 @@
+version: "3.9"
+
+x-default-env: &default-env
+  LAB_WEB_PORT: "${LAB_WEB_PORT:-8080}"
+  LAB_SSH_PORT: "${LAB_SSH_PORT:-2222}"
+  LAB_SIEM_PORT: "${LAB_SIEM_PORT:-9200}"
+  LAB_DASHBOARD_PORT: "${LAB_DASHBOARD_PORT:-5601}"
+
+services:
+  attacker:
+    build:
+      context: ./infra/docker/attacker
+    environment:
+      <<: *default-env
+    volumes:
+      - ./redteam:/opt/redteam:ro
+      - ./telemetry:/opt/telemetry
+      - ./docs:/opt/docs:ro
+    depends_on:
+      - victim-ssh
+      - victim-web
+      - defender-siem
+    networks:
+      labnet:
+        aliases: [attacker]
+    tty: true
+    stdin_open: true
+
+  victim-web:
+    build:
+      context: ./infra/docker/victim-web
+    environment:
+      <<: *default-env
+      ENABLE_RISKY: "${ENABLE_RISKY:-false}"
+    volumes:
+      - ./telemetry/logs/victim-web:/var/log/victim-web
+    ports:
+      - "${LAB_WEB_PORT:-8080}:5000"
+    networks:
+      labnet:
+        aliases: [victim-web]
+
+  victim-ssh:
+    build:
+      context: ./infra/docker/victim-ssh
+    environment:
+      <<: *default-env
+      MAX_AUTH_TRIES: "${MAX_AUTH_TRIES:-6}"
+      LOGIN_GRACE_TIME: "${LOGIN_GRACE_TIME:-120}"
+      ENABLE_FAIL2BAN: "${ENABLE_FAIL2BAN:-false}"
+    ports:
+      - "${LAB_SSH_PORT:-2222}:22"
+    volumes:
+      - ./telemetry/logs/victim-ssh:/var/log
+    networks:
+      labnet:
+        aliases: [victim-ssh]
+
+  defender-siem:
+    build:
+      context: ./infra/docker/defender-siem
+    environment:
+      <<: *default-env
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: "${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-admin123}"
+    ports:
+      - "${LAB_SIEM_PORT:-9200}:9200"
+      - "${LAB_DASHBOARD_PORT:-5601}:5601"
+    volumes:
+      - defender-data:/var/lib/opensearch
+      - ./blueteam:/opt/detect:ro
+      - ./telemetry:/opt/telemetry
+    networks:
+      labnet:
+        aliases: [defender-siem]
+
+  mitm-gateway:
+    build:
+      context: ./infra/docker/mitm-gateway
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./telemetry/capture:/opt/capture
+    networks:
+      labnet:
+        aliases: [mitm-gateway]
+
+networks:
+  labnet:
+    driver: bridge
+
+volumes:
+  defender-data:

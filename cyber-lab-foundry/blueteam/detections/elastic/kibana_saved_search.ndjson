@@ -1,0 +1,1 @@
+{"type":"search","id":"ssh-bruteforce-search","attributes":{"title":"SSH Bruteforce Candidates","description":"Failed SSH logins grouped by source","hits":0,"columns":["user","src_ip"],"sort":["@timestamp","desc"],"kibanaSavedObjectMeta":{"searchSourceJSON":"{\"query\":{\"query\":\"Failed password\",\"language\":\"kuery\"},\"filter\":[]}"}}}

@@ -1,0 +1,21 @@
+{
+  "name": "Cyber Lab Foundry",
+  "build": {
+    "dockerfile": "../infra/docker/attacker/Dockerfile",
+    "context": "..",
+    "args": {
+      "DEVCONTAINER": "true"
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "postCreateCommand": "pip install -r requirements.txt && pip install -r docs/requirements.txt && pre-commit install",
+  "remoteUser": "student",
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ]
+}

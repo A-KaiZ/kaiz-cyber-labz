@@ -1,0 +1,7 @@
+flowchart LR
+    attacker[(Attacker)] -->|SSH/HTTP| mitm{{MITM Gateway}}
+    mitm --> victimssh[Victim SSH]
+    mitm --> victimweb[Victim Web]
+    victimssh --> siem[(Defender SIEM)]
+    victimweb --> siem
+    mitm -->|PCAPs| storage[(Telemetry Volume)]

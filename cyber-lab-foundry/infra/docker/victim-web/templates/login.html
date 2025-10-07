@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vulnerable Login</title>
+  </head>
+  <body>
+    <h1>Victim Web Login</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form action="/login" method="post">
+      <label>Username</label>
+      <input type="text" name="username">
+      <label>Password</label>
+      <input type="password" name="password">
+      <button type="submit">Login</button>
+    </form>
+    <p>Hint: Inspect the responses to find injectable parameters.</p>
+    {% if risky %}
+    <p><strong>Risky mode enabled.</strong> Uploading scripts will execute server-side.</p>
+    {% else %}
+    <p>Risky mode disabled. Follow the scenario guide to enable it temporarily.</p>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,23 @@
+title: SSH Bruteforce Burst
+id: 0a3b1ddc-6ef0-4e25-9f2e-ssh-brute
+status: experimental
+description: Detects multiple failed SSH logins from the same source in a short timeframe.
+author: Cyber Lab Foundry
+logsource:
+  product: linux
+  service: auth
+  definition: Log entries from /var/log/auth.log
+level: medium
+detection:
+  selection:
+    MESSAGE|contains: "Failed password"
+  timeframe: 5m
+  condition: selection | count() by src_ip > 5
+fields:
+  - user
+  - src_ip
+  - message
+references:
+  - https://attack.mitre.org/techniques/T1110/001/
+falsepositives:
+  - Legitimate password resets or configuration errors

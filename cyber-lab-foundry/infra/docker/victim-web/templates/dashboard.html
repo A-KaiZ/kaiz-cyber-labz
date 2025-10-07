@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Victim Dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome, {{ username }}</h1>
+    <p>This dashboard is intentionally minimal. Review logs and upload files below.</p>
+    <section>
+      <h2>Log review</h2>
+      <a href="/logs">Download current log</a>
+    </section>
+    <section>
+      <h2>Upload webshell</h2>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="webshell">
+        <button type="submit">Upload</button>
+      </form>
+      {% if not risky %}
+      <p>Uploads are disabled from executing until ENABLE_RISKY=true.</p>
+      {% else %}
+      <p><strong>Warning:</strong> Uploaded Python or shell scripts execute immediately.</p>
+      {% endif %}
+    </section>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+success_criteria:
+  - description: "Valid credentials discovered for victim user"
+    evidence: "telemetry/redteam/01-ssh-bruteforce/bruteforce.log"
+  - description: "Interactive SSH session transcript captured"
+    evidence: "telemetry/redteam/01-ssh-bruteforce/session.txt"
+  - description: "SIEM alert triggered for bruteforce activity"
+    evidence: "blueteam/detections/sigma/ssh_bruteforce.yml"

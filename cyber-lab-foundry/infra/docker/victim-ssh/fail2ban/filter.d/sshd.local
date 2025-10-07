@@ -1,0 +1,3 @@
+[Definition]
+failregex = ^%(__prefix_line)s(?:error: PAM: Authentication failure|Failed password for).* from <HOST> port .*$
+ignoreregex =

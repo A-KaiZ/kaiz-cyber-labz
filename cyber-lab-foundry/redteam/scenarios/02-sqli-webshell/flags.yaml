@@ -1,0 +1,7 @@
+success_criteria:
+  - description: "SQL injection payload identified"
+    evidence: "telemetry/redteam/02-sqli-webshell/probe.json"
+  - description: "Webshell uploaded and executed"
+    evidence: "telemetry/redteam/02-sqli-webshell/upload.html"
+  - description: "Server logs captured for investigation"
+    evidence: "telemetry/redteam/02-sqli-webshell/web_logs.txt"
